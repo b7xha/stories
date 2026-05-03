@@ -2,163 +2,153 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Stories</title>
+<title>قصص وحكم</title>
 
 <style>
 body {
-    background: black;
-    color: #00ff88;
     font-family: Arial;
-    padding: 20px;
+    margin: 0;
+    background: #f5f5f5;
+    color: #222;
 }
 
-.story {
-    border: 1px solid #00ff88;
+.dark {
+    background: #111;
+    color: #fff;
+}
+
+.header {
     padding: 15px;
-    margin-top: 20px;
+    background: white;
 }
 
-h2 {
-    color: #00ffaa;
+.dark .header {
+    background: #1a1a1a;
 }
 
-a {
-    color: #00ffaa;
-    text-decoration: none;
-    display: block;
-    margin: 5px 0;
+h1 {
+    color: #ff6600;
 }
 
-button {
-    background: #00ff88;
-    border: none;
-    padding: 8px 12px;
-    margin-bottom: 15px;
+.search {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.card {
+    background: white;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 10px;
     cursor: pointer;
 }
 
-/* شكل الإعلان */
-.ad {
-    text-align: center;
-    margin: 15px 0;
+.dark .card {
+    background: #1e1e1e;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.desc {
+    color: gray;
+    margin-top: 5px;
+}
+
+.toggle {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #ff6600;
+    color: white;
+    padding: 8px;
+    cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📚 القصص</h1>
+<div class="toggle" onclick="toggleTheme()">🌙</div>
 
-<div id="menu"></div>
-<div id="content"></div>
+<div class="header">
+    <h1>قصص وحكم</h1>
+    <input class="search" placeholder="ادخل اسم القصة" oninput="search(this.value)">
+</div>
+
+<div id="stories"></div>
 
 <script>
 
-// 🔥 ضيف هنا بس أسماء الملفات
 const files = [
     "story1.txt",
     "story2.txt"
 ];
 
-// قراءة الرابط
-const params = new URLSearchParams(window.location.search);
-const storyName = params.get("story");
+const container = document.getElementById("stories");
 
-const menu = document.getElementById("menu");
-const content = document.getElementById("content");
+let allStories = [];
 
-// عرض قائمة القصص
 files.forEach(file => {
-    const link = document.createElement("a");
-    link.href = "?story=" + file;
-    link.textContent = file;
-    menu.appendChild(link);
-});
-
-// عرض القصة
-if (storyName) {
-
-    fetch(storyName)
+    fetch(file)
     .then(res => res.text())
     .then(data => {
 
-        const div = document.createElement("div");
-        div.className = "story";
-
-        // زر نسخ الرابط
-        const copyBtn = document.createElement("button");
-        copyBtn.textContent = "نسخ رابط القصة";
-        copyBtn.onclick = () => {
-            navigator.clipboard.writeText(window.location.href);
-            alert("تم نسخ الرابط");
-        };
-
-        div.appendChild(copyBtn);
-
         const lines = data.split("\n");
 
+        let mainTitle = "";
+        let content = "";
+
         lines.forEach(line => {
-            line = line.trim();
-
-            if(line.startsWith("**") && line.endsWith("**")) {
-                const title = document.createElement("h2");
-                title.textContent = line.replace(/\*\*/g, "");
-                div.appendChild(title);
-
-            } else if(line !== "") {
-                const p = document.createElement("p");
-                p.textContent = line;
-                div.appendChild(p);
-
-                // 🔥 إعلان بين الفقرات
-                const ad = document.createElement("div");
-                ad.className = "ad";
-
-                ad.innerHTML = `
-<script>
-atOptions = {
-    'key' : 'dcff8a2cffdf0642c627a5bacf3a04fd',
-    'format' : 'iframe',
-    'height' : 60,
-    'width' : 468,
-    'params' : {}
-};
-<\/script>
-<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
-`;
-
-                div.appendChild(ad);
+            if(line.startsWith("***") && line.endsWith("***")) {
+                mainTitle = line.replace(/\*/g, "");
+            } else {
+                content += line + " ";
             }
         });
 
-        content.appendChild(div);
+        let desc = content.substring(0, 50) + "....";
+
+        const story = {file, mainTitle, desc};
+        allStories.push(story);
+
+        render(allStories);
+    });
+});
+
+function render(list){
+    container.innerHTML = "";
+    list.forEach(s => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.onclick = () => {
+            window.location.href = "story.html?file=" + s.file;
+        };
+
+        div.innerHTML = `
+            <div class="title">${s.mainTitle}</div>
+            <div class="desc">${s.desc}</div>
+        `;
+
+        container.appendChild(div);
     });
 }
 
-</script>
-
-<!-- 🔥 إعلان جانبي ثابت -->
-<script>
-atOptions = {
-    'key' : '0b7539a5227dc7b69da2ea94b0521ab6',
-    'format' : 'iframe',
-    'height' : 300,
-    'width' : 160,
-    'params' : {}
-};
-</script>
-<script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
-
-<!-- 🔥 إعلان pop مرة واحدة -->
-<script>
-function openAd() {
-    window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c", "_blank");
+function search(val){
+    const filtered = allStories.filter(s =>
+        s.mainTitle.includes(val)
+    );
+    render(filtered);
 }
 
-document.body.addEventListener("click", function () {
-    openAd();
-}, { once: true });
+function toggleTheme(){
+    document.body.classList.toggle("dark");
+}
+
 </script>
 
 </body>
-  </html>
+</html>
