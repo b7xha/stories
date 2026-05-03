@@ -30,6 +30,8 @@ body{
 
 h1{
   text-align:center;
+  width:100%;
+  margin:10px 0;
   color:var(--main);
 }
 
@@ -47,13 +49,15 @@ p{
 /* زر الثيم */
 .toggle{
   position:fixed;
-  top:10px;
-  left:10px;
+  top:15px;
+  left:15px;
   background:var(--main);
   color:#fff;
-  padding:6px 10px;
-  border-radius:8px;
+  padding:10px 12px;
+  border-radius:10px;
   cursor:pointer;
+  z-index:9999;
+  font-size:16px;
 }
 
 /* إعلان */
@@ -99,7 +103,6 @@ fetch(file)
       p.textContent=line;
       div.appendChild(p);
 
-      // 🔥 إعلان شريطي بين كل فقرة
       let ad=document.createElement("div");
       ad.className="ad";
       ad.innerHTML=`
@@ -133,17 +136,33 @@ if(localStorage.getItem("theme")==="true"){
 
 </script>
 
-<!-- إعلان واحد في النهاية -->
-<div class="ad">
-<script>
-atOptions = {
- 'key':'0b7539a5227dc7b69da2ea94b0521ab6',
- 'format':'iframe',
- 'height':250,
- 'width':300
-};
-</script>
-<script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
+<!-- إعلانين في النهاية جنب بعض -->
+<div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:20px 0;">
+
+  <div class="ad">
+    <script>
+    atOptions = {
+     'key':'0b7539a5227dc7b69da2ea94b0521ab6',
+     'format':'iframe',
+     'height':250,
+     'width':300
+    };
+    </script>
+    <script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
+  </div>
+
+  <div class="ad">
+    <script>
+    atOptions = {
+     'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
+     'format':'iframe',
+     'height':250,
+     'width':300
+    };
+    </script>
+    <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
+  </div>
+
 </div>
 
 <!-- pop -->
