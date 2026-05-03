@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Stories</title>
+
+<style>
+body {
+    background: black;
+    color: #00ff88;
+    font-family: Arial;
+    padding: 20px;
+}
+
+.story {
+    border: 1px solid #00ff88;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+h2 {
+    color: #00ffaa;
+}
+
+a {
+    color: #00ffaa;
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+}
+
+button {
+    background: #00ff88;
+    border: none;
+    padding: 8px 12px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+/* شكل الإعلان */
+.ad {
+    text-align: center;
+    margin: 15px 0;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📚 القصص</h1>
+
+<div id="menu"></div>
+<div id="content"></div>
+
+<script>
+
+// 🔥 ضيف هنا بس أسماء الملفات
+const files = [
+    "story1.txt",
+    "story2.txt"
+];
+
+// قراءة الرابط
+const params = new URLSearchParams(window.location.search);
+const storyName = params.get("story");
+
+const menu = document.getElementById("menu");
+const content = document.getElementById("content");
+
+// عرض قائمة القصص
+files.forEach(file => {
+    const link = document.createElement("a");
+    link.href = "?story=" + file;
+    link.textContent = file;
+    menu.appendChild(link);
+});
+
+// عرض القصة
+if (storyName) {
+
+    fetch(storyName)
+    .then(res => res.text())
+    .then(data => {
+
+        const div = document.createElement("div");
+        div.className = "story";
+
+        // زر نسخ الرابط
+        const copyBtn = document.createElement("button");
+        copyBtn.textContent = "نسخ رابط القصة";
+        copyBtn.onclick = () => {
+            navigator.clipboard.writeText(window.location.href);
+            alert("تم نسخ الرابط");
+        };
+
+        div.appendChild(copyBtn);
+
+        const lines = data.split("\n");
+
+        lines.forEach(line => {
+            line = line.trim();
+
+            if(line.startsWith("**") && line.endsWith("**")) {
+                const title = document.createElement("h2");
+                title.textContent = line.replace(/\*\*/g, "");
+                div.appendChild(title);
+
+            } else if(line !== "") {
+                const p = document.createElement("p");
+                p.textContent = line;
+                div.appendChild(p);
+
+                // 🔥 إعلان بين الفقرات
+                const ad = document.createElement("div");
+                ad.className = "ad";
+
+                ad.innerHTML = `
+<script>
+atOptions = {
+    'key' : 'dcff8a2cffdf0642c627a5bacf3a04fd',
+    'format' : 'iframe',
+    'height' : 60,
+    'width' : 468,
+    'params' : {}
+};
+<\/script>
+<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
+`;
+
+                div.appendChild(ad);
+            }
+        });
+
+        content.appendChild(div);
+    });
+}
+
+</script>
+
+<!-- 🔥 إعلان جانبي ثابت -->
+<script>
+atOptions = {
+    'key' : '0b7539a5227dc7b69da2ea94b0521ab6',
+    'format' : 'iframe',
+    'height' : 300,
+    'width' : 160,
+    'params' : {}
+};
+</script>
+<script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
+
+<!-- 🔥 إعلان pop مرة واحدة -->
+<script>
+function openAd() {
+    window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c", "_blank");
+}
+
+document.body.addEventListener("click", function () {
+    openAd();
+}, { once: true });
+</script>
+
+</body>
+  </html>
