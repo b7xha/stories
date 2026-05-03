@@ -47,6 +47,13 @@ h2{
   color:#ffaa33;
 }
 
+h9{
+  text-align:left;
+  color:#ffpp86;
+  
+} 
+
+  
 p{
   line-height:2;
   margin:10px 0;
@@ -110,14 +117,11 @@ fetch(file)
       p.textContent=line;
       div.appendChild(p);
 
-     }else if(line.startsWith("_")){
-      let h2 = document.createElement("h2");
-      h2.textContent = line.replace(/\*/g, "");
-
-      h2.style.textAlign = "left";
-      h2.style.color = "blue";
-
-      div.appendChild(h2);
+   }else if(line.startsWith("_")){
+      let h9=document.createElement("h9");
+      h9.textContent=line.replace(/\*/g,"");
+      div.appendChild(h9);
+ 
  
 
       let ad=document.createElement("div");
