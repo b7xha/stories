@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>قصص وروايات</title>
-
 <meta name="description" content="استمتع بقراءة مجموعة متنوعة من القصص والروايات المشوقة في مكان واحد، مع محتوى متجدد يناسب جميع الأذواق وسهل التصفح من أي جهاز.">
 <meta property="og:title" content="قصص وروايات">
 <meta property="og:description" content="استمتع بقراءة مجموعة متنوعة من القصص والروايات المشوقة في مكان واحد، مع محتوى متجدد يناسب جميع الأذواق وسهل التصفح من أي جهاز.">
 <meta property="og:image" content="https://i.ibb.co/zTXjGDvv/1777845960043.png">
 <meta property="og:type" content="website">
 
+  
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -37,6 +37,7 @@ body{
 
 h1{
   text-align:center;
+  width:100%;
   margin:10px 0;
   color:var(--main);
 }
@@ -46,19 +47,16 @@ h2{
   color:#ffaa33;
 }
 
+
+
+  
 p{
   line-height:2;
   margin:10px 0;
   text-align:center;
 }
 
-kl{
-  line-height:2;
-  margin:10px 0;
-  text-align:left;
-}
-
-  
+/* زر الثيم */
 .toggle{
   position:fixed;
   top:15px;
@@ -69,22 +67,12 @@ kl{
   border-radius:10px;
   cursor:pointer;
   z-index:9999;
+  font-size:16px;
 }
 
+/* إعلان */
 .ad{
   margin:15px 0;
-  text-align:center;
-}
-
-/* شريط إعلان يظهر بعد دقيقة */
-#delayedAd{
-  position:fixed;
-  bottom:0;
-  left:0;
-kl width:100%;
-  background:#000;
-  display:none;
-  z-index:99999;
   text-align:center;
 }
 </style>
@@ -92,31 +80,13 @@ kl width:100%;
 
 <body>
 
+
+
 <div id="content"></div>
 
-<!-- إعلان متأخر -->
-<div id="delayedAd"></div>
-
 <script>
 
-const file = new URLSearchParams(location.search).get("file");
-
-function createAd(){
-  let ad=document.createElement("div");
-  ad.className="ad";
-  ad.innerHTML=`
-<script>
-atOptions = {
- 'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
- 'format':'iframe',
- 'height':60,
- 'width':320
-};
-<\/script>
-<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
-`;
-  return ad;
-}
+const file=new URLSearchParams(location.search).get("file");
 
 fetch(file)
 .then(r=>r.text())
@@ -138,40 +108,34 @@ fetch(file)
       h2.textContent=line.replace(/\*/g,"");
       div.appendChild(h2);
 
-    }else if(line !== ""){
-
+    }else if(line!==""){
       let p=document.createElement("p");
+      p.textContent=line;
+      div.appendChild(p);
 
-      // دعم _كلمة_
-      p.innerHTML = line.replace(/_(.*?)_/g,'<u>$1</u>');
+    
+ 
+ 
 
-      div.appendChild(kl);
-
-      // إعلان بعد كل فقرة
-      div.appendChild(createAd());
+      let ad=document.createElement("div");
+      ad.className="ad";
+      ad.innerHTML=`
+<script>
+atOptions = {
+ 'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
+ 'format':'iframe',
+ 'height':60,
+ 'width':320
+};
+<\/script>
+<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
+`;
+      div.appendChild(ad);
     }
 
   });
 
 });
-
-// إعلان بعد دقيقة
-setTimeout(()=>{
-  let box=document.getElementById("delayedAd");
-  box.style.display="block";
-
-  box.innerHTML=`
-<script>
-atOptions = {
- 'key':'0b7539a5227dc7b69da2ea94b0521ab6',
- 'format':'iframe',
- 'height':90,
- 'width':728
-};
-<\/script>
-<script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"><\/script>
-`;
-},60000);
 
 // ثيم
 function toggleTheme(){
@@ -184,6 +148,42 @@ if(localStorage.getItem("theme")==="true"){
   document.body.classList.add("dark");
 }
 
+</script>
+
+<!-- إعلانين في النهاية جنب بعض -->
+<div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:20px 0;">
+
+  <div class="ad">
+    <script>
+    atOptions = {
+     'key':'0b7539a5227dc7b69da2ea94b0521ab6',
+     'format':'iframe',
+     'height':250,
+     'width':300
+    };
+    </script>
+    <script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
+  </div>
+
+  <div class="ad">
+    <script>
+    atOptions = {
+     'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
+     'format':'iframe',
+     'height':250,
+     'width':300
+    };
+    </script>
+    <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
+  </div>
+
+</div>
+
+<!-- pop -->
+<script>
+document.body.addEventListener("click",function(){
+window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c");
+},{once:true});
 </script>
 
 </body>
