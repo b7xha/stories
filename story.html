@@ -2,80 +2,107 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Story</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-body {
-    background: black;
-    color: white;
-    font-family: Arial;
-    padding: 15px;
+:root{
+    --bg:#ffffff;
+    --text:#222;
+    --main:#ff6a00;
 }
 
-h1 {
-    color: #ff6600;
+body.dark{
+    --bg:#0f0f0f;
+    --text:#fff;
 }
 
-h2 {
-    color: #ffaa33;
+body{
+    margin:0;
+    padding:15px;
+    font-family:'Cairo',sans-serif;
+    background:var(--bg);
+    color:var(--text);
 }
 
-p {
-    line-height: 1.8;
+h1{
+    color:var(--main);
 }
 
-.ad {
-    margin: 15px 0;
-    text-align: center;
+h2{
+    color:#ffaa33;
+}
+
+p{
+    line-height:1.9;
+    margin-bottom:10px;
+}
+
+.toggle{
+    position:fixed;
+    top:10px;
+    left:10px;
+    background:var(--main);
+    color:#fff;
+    padding:6px 10px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.ad{
+    margin:20px 0;
+    text-align:center;
 }
 </style>
 </head>
 
 <body>
 
+<div class="toggle" onclick="toggleTheme()">🌙</div>
+
 <div id="content"></div>
 
 <script>
 
-const params = new URLSearchParams(location.search);
-const file = params.get("file");
+const params=new URLSearchParams(location.search);
+const file=params.get("file");
 
 fetch(file)
-.then(res => res.text())
-.then(data => {
+.then(r=>r.text())
+.then(data=>{
 
-    const div = document.getElementById("content");
+    const div=document.getElementById("content");
+    let lines=data.split("\n");
 
-    const lines = data.split("\n");
+    lines.forEach(line=>{
+        line=line.trim();
 
-    lines.forEach(line => {
-        line = line.trim();
-
-        if(line.startsWith("***") && line.endsWith("***")){
-            const h1 = document.createElement("h1");
-            h1.textContent = line.replace(/\*/g, "");
+        if(line.startsWith("***")){
+            let h1=document.createElement("h1");
+            h1.textContent=line.replace(/\*/g,"");
             div.appendChild(h1);
 
-        } else if(line.startsWith("**") && line.endsWith("**")){
-            const h2 = document.createElement("h2");
-            h2.textContent = line.replace(/\*/g, "");
+        }else if(line.startsWith("**")){
+            let h2=document.createElement("h2");
+            h2.textContent=line.replace(/\*/g,"");
             div.appendChild(h2);
 
-        } else if(line !== ""){
-            const p = document.createElement("p");
-            p.textContent = line;
+        }else if(line!==""){
+            let p=document.createElement("p");
+            p.textContent=line;
             div.appendChild(p);
 
-            // 🔥 إعلان شريطي
-            const ad = document.createElement("div");
-            ad.className = "ad";
-            ad.innerHTML = `
+            // إعلان شريطي
+            let ad=document.createElement("div");
+            ad.className="ad";
+            ad.innerHTML=`
 <script>
 atOptions = {
- 'key' : 'dcff8a2cffdf0642c627a5bacf3a04fd',
- 'format' : 'iframe',
- 'height' : 60,
- 'width' : 468
+ 'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
+ 'format':'iframe',
+ 'height':60,
+ 'width':468
 };
 <\/script>
 <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
@@ -86,16 +113,26 @@ atOptions = {
 
 });
 
+// ثيم
+function toggleTheme(){
+    document.body.classList.toggle("dark");
+    localStorage.setItem("theme",document.body.classList.contains("dark"));
+}
+
+if(localStorage.getItem("theme")==="true"){
+    document.body.classList.add("dark");
+}
+
 </script>
 
-<!-- إعلان مربع واحد فقط -->
+<!-- إعلان مربع واحد -->
 <div class="ad">
 <script>
 atOptions = {
- 'key' : '0b7539a5227dc7b69da2ea94b0521ab6',
- 'format' : 'iframe',
- 'height' : 300,
- 'width' : 160
+ 'key':'0b7539a5227dc7b69da2ea94b0521ab6',
+ 'format':'iframe',
+ 'height':300,
+ 'width':160
 };
 </script>
 <script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
@@ -103,9 +140,9 @@ atOptions = {
 
 <!-- pop -->
 <script>
-document.body.addEventListener("click", function () {
-    window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c");
-}, { once: true });
+document.body.addEventListener("click",function(){
+window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c");
+},{once:true});
 </script>
 
 </body>
