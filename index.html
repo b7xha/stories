@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> قصص وروايات</title>
+<title>قصص وحكم</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -42,6 +42,7 @@ body{
 h1{
   margin:0;
   text-align:center;
+  width:100%;
   color:var(--main);
 }
 
@@ -94,9 +95,11 @@ h1{
   left:15px;
   background:var(--main);
   color:#fff;
-  padding:8px;
-  border-radius:8px;
+  padding:10px 12px;
+  border-radius:10px;
   cursor:pointer;
+  z-index:9999;
+  font-size:16px;
 }
 
 /* AD */
@@ -112,7 +115,7 @@ h1{
 <div class="toggle" onclick="toggleTheme()">🌙</div>
 
 <div class="header">
-  <h1>قصص وروايات</h1>
+  <h1>قصص وحكم</h1>
   <input class="search" placeholder="ابحث..." oninput="search(this.value)">
 </div>
 
@@ -125,7 +128,6 @@ const container=document.getElementById("stories");
 
 let allStories=[];
 
-// تحميل القصص
 files.forEach(file=>{
   fetch(file)
   .then(r=>r.text())
@@ -165,7 +167,6 @@ function render(list){
 
     container.appendChild(card);
 
-    // 🔥 إعلان شريطي كل قصتين
     if((i+1)%2===0){
       let ad=document.createElement("div");
       ad.className="ad";
@@ -186,19 +187,16 @@ atOptions = {
   });
 }
 
-// البحث
 function search(v){
   render(allStories.filter(s=>s.title.includes(v)));
 }
 
-// الثيم
 function toggleTheme(){
   let dark=!document.body.classList.contains("dark");
   document.body.classList.toggle("dark");
   localStorage.setItem("theme",dark);
 }
 
-// تطبيق الثيم تلقائي
 if(localStorage.getItem("theme")==="true"){
   document.body.classList.add("dark");
 }
