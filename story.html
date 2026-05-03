@@ -110,6 +110,16 @@ fetch(file)
       p.textContent=line;
       div.appendChild(p);
 
+     }else if(line.startsWith("****")){
+      let h2 = document.createElement("h2");
+      h2.textContent = line.replace(/\*/g, "");
+
+      h2.style.textAlign = "left";
+      h2.style.color = "blue";
+
+      div.appendChild(h2);
+
+
       let ad=document.createElement("div");
       ad.className="ad";
       ad.innerHTML=`
