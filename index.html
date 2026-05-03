@@ -1,105 +1,108 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>قصص وحكم</title>
+<title> قصص وروايات</title>
 
-<!-- خط عربي احترافي -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-    --bg:#f5f5f5;
-    --card:#ffffff;
-    --text:#222;
-    --sub:#777;
-    --main:#ff6a00;
+  --bg:#f5f5f5;
+  --card:#ffffff;
+  --text:#222;
+  --sub:#777;
+  --main:#ff6a00;
 }
 
 body.dark{
-    --bg:#0f0f0f;
-    --card:#1a1a1a;
-    --text:#fff;
-    --sub:#aaa;
+  --bg:#0f0f0f;
+  --card:#1a1a1a;
+  --text:#fff;
+  --sub:#aaa;
 }
 
 body{
-    margin:0;
-    font-family:'Cairo', sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    transition:0.3s;
+  margin:0;
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
+/* HEADER */
 .header{
-    padding:15px;
-    background:var(--card);
-    position:sticky;
-    top:0;
-    z-index:10;
-    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  padding:15px;
+  background:var(--card);
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
 h1{
-    margin:0;
-    color:var(--main);
+  margin:0;
+  text-align:center;
+  color:var(--main);
 }
 
+/* SEARCH */
 .search{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border-radius:8px;
-    border:none;
-    background:#eee;
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:none;
+  background:#eee;
 }
 
 .dark .search{
-    background:#2a2a2a;
-    color:#fff;
+  background:#2a2a2a;
+  color:#fff;
+}
+
+/* CARDS */
+.container{
+  max-width:600px;
+  margin:auto;
 }
 
 .card{
-    background:var(--card);
-    margin:12px;
-    padding:15px;
-    border-radius:12px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-    cursor:pointer;
-    transition:0.2s;
-}
-
-.card:hover{
-    transform:scale(1.02);
+  background:var(--card);
+  margin:12px;
+  padding:15px;
+  border-radius:12px;
+  cursor:pointer;
 }
 
 .title{
-    font-weight:700;
-    font-size:18px;
+  font-weight:700;
+  font-size:18px;
+  text-align:center;
 }
 
 .desc{
-    color:var(--sub);
-    margin-top:6px;
-    font-size:14px;
+  color:var(--sub);
+  margin-top:8px;
+  text-align:center;
+  font-size:14px;
 }
 
+/* THEME BTN */
 .toggle{
-    position:fixed;
-    top:15px;
-    left:15px;
-    background:var(--main);
-    color:#fff;
-    padding:8px 10px;
-    border-radius:8px;
-    cursor:pointer;
+  position:fixed;
+  top:15px;
+  left:15px;
+  background:var(--main);
+  color:#fff;
+  padding:8px;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-/* إعلان شريطي */
+/* AD */
 .ad{
-    margin:15px;
-    text-align:center;
+  margin:15px 10px;
+  text-align:center;
 }
 </style>
 </head>
@@ -109,91 +112,95 @@ h1{
 <div class="toggle" onclick="toggleTheme()">🌙</div>
 
 <div class="header">
-    <h1>قصص وحكم</h1>
-    <input class="search" placeholder="ابحث عن قصة..." oninput="search(this.value)">
+  <h1>قصص وروايات</h1>
+  <input class="search" placeholder="ابحث..." oninput="search(this.value)">
 </div>
 
-<div id="stories"></div>
+<div class="container" id="stories"></div>
 
 <script>
 
-const files = ["story1.txt","story2.txt"];
-const container = document.getElementById("stories");
+const files=["story1.txt","story2.txt"];
+const container=document.getElementById("stories");
 
 let allStories=[];
 
+// تحميل القصص
 files.forEach(file=>{
-    fetch(file)
-    .then(r=>r.text())
-    .then(data=>{
-        let lines=data.split("\n");
+  fetch(file)
+  .then(r=>r.text())
+  .then(data=>{
+    let lines=data.split("\n");
 
-        let title="",content="";
+    let title="",content="";
 
-        lines.forEach(l=>{
-            if(l.startsWith("***") && l.endsWith("***")){
-                title=l.replace(/\*/g,"");
-            }else{
-                content+=l+" ";
-            }
-        });
-
-        let desc=content.substring(0,50)+"...";
-
-        let story={file,title,desc};
-        allStories.push(story);
-
-        render(allStories);
+    lines.forEach(l=>{
+      if(l.startsWith("***") && l.endsWith("***")){
+        title=l.replace(/\*/g,"");
+      }else{
+        content+=l+" ";
+      }
     });
+
+    let desc=content.substring(0,50)+"...";
+
+    allStories.push({file,title,desc});
+    render(allStories);
+  });
 });
 
 function render(list){
-    container.innerHTML="";
+  container.innerHTML="";
 
-    list.forEach((s,i)=>{
-        let div=document.createElement("div");
-        div.className="card";
-        div.onclick=()=>location.href="story.html?file="+s.file;
+  list.forEach((s,i)=>{
 
-        div.innerHTML=`
-        <div class="title">${s.title}</div>
-        <div class="desc">${s.desc}</div>
-        `;
+    let card=document.createElement("div");
+    card.className="card";
+    card.onclick=()=>location.href="story.html?file="+s.file;
 
-        container.appendChild(div);
+    card.innerHTML=`
+      <div class="title">${s.title}</div>
+      <div class="desc">${s.desc}</div>
+    `;
 
-        // إعلان كل قصتين
-        if((i+1)%2===0){
-            let ad=document.createElement("div");
-            ad.className="ad";
-            ad.innerHTML=`
+    container.appendChild(card);
+
+    // 🔥 إعلان شريطي كل قصتين
+    if((i+1)%2===0){
+      let ad=document.createElement("div");
+      ad.className="ad";
+      ad.innerHTML=`
 <script>
 atOptions = {
  'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
  'format':'iframe',
  'height':60,
- 'width':468
+ 'width':320
 };
 <\/script>
 <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
 `;
-            container.appendChild(ad);
-        }
-    });
+      container.appendChild(ad);
+    }
+
+  });
 }
 
+// البحث
 function search(v){
-    render(allStories.filter(s=>s.title.includes(v)));
+  render(allStories.filter(s=>s.title.includes(v)));
 }
 
+// الثيم
 function toggleTheme(){
-    document.body.classList.toggle("dark");
-    localStorage.setItem("theme",document.body.classList.contains("dark"));
+  let dark=!document.body.classList.contains("dark");
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme",dark);
 }
 
-// حفظ الثيم
+// تطبيق الثيم تلقائي
 if(localStorage.getItem("theme")==="true"){
-    document.body.classList.add("dark");
+  document.body.classList.add("dark");
 }
 
 </script>
