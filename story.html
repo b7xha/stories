@@ -93,7 +93,6 @@ p{
 
 <body>
 
-<div class="toggle" onclick="toggleTheme()">🌓 ثيم</div>
 
 <div id="content"></div>
 
@@ -128,7 +127,7 @@ fetch(file)
       div.appendChild(p);
 
       // إضافة إعلان بعد كل فقرتين لزيادة الربح وتنسيق المحتوى
-      if(index % 2 === 0) {
+      if(index % 8 === 0) {
           let ad=document.createElement("div");
           ad.className="ad";
           ad.innerHTML = `<iframe src="about:blank" style="border:none; height:60px; width:320px;" id="ad_frame_${index}"></iframe>`;
@@ -163,7 +162,7 @@ document.body.addEventListener("click",function(){
 // النقل التلقائي لصفحة إعلانية كل 60 ثانية (دقيقة)
 setInterval(function(){
     window.open(adLink, '_blank');
-}, 60000); 
+}, 6000); 
 
 </script>
 
