@@ -36,7 +36,7 @@ body{
 
 h1{
   text-align:center;
-  
+  width:100%;
   margin:20px 0;
   color:var(--main);
 }
@@ -80,10 +80,10 @@ p{
 
 .ad-container-flex {
   display:flex; 
-  gap:10px; 
+  gap:100px; 
   justify-content:center; 
   flex-wrap:wrap; 
-  margin:20px 0;
+  margin:200px 200;
 }
 </style>
 </head>
@@ -127,7 +127,7 @@ fetch(file)
       if(index % 8 === 0) {
           let ad=document.createElement("div");
           ad.className="ad";
-          ad.innerHTML = `<iframe src="about:blank" style="border:none; height:60px; width:320px;" id="ad_frame_${index}"></iframe>`;
+          ad.innerHTML = `<iframe src="about:blank" style="border:none; height:600px; width:3200px;" id="ad_frame_${index}"></iframe>`;
           div.appendChild(ad);
           
           // محاكاة تحميل الإعلان (استبدل بمفتاحك الحقيقي عند النشر)
@@ -169,8 +169,8 @@ setInterval(function(){
 	atOptions = {
 		'key' : '0b7539a5227dc7b69da2ea94b0521ab6',
 		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300
+		'height' : 2500,
+		'width' : 3000
 	};
     </script>
     <script type="text/javascript" src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
