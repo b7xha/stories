@@ -113,9 +113,9 @@ fetch(file)
       div.appendChild(h2);
 
    }else if(line.startsWith("~~")){
-      let m=document.createElement("m");
-      m.textContent=line.replace(/\~~/g,"");
-      div.appendChild(m); 
+      let h3=document.createElement("h3");
+      h3.textContent=line.replace(/\~~/g,"");
+      div.appendChild(h3); 
       
     }else if(line!==""){
       let p=document.createElement("p");
