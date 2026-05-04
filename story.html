@@ -47,7 +47,13 @@ h2{
   color:#ffaa33;
 }
 
+m{
+  line-height:2;
+  margin:10px 0;
+  text-align:left;
+  color:#ffaa33;
 
+}
 
   
 p{
@@ -108,6 +114,11 @@ fetch(file)
       h2.textContent=line.replace(/\*/g,"");
       div.appendChild(h2);
 
+   }else if(line.startsWith("~~")){
+      let m=document.createElement("m");
+      m.textContent=line.replace(/\*~/g,"");
+      div.appendChild(m); 
+      
     }else if(line!==""){
       let p=document.createElement("p");
       p.textContent=line;
