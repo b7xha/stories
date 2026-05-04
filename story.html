@@ -74,9 +74,8 @@ p{
 }
 
 .ad{
-  text-align:center;
-  justify-content: center;
-   /* لمنع خروج الإعلانات الكبيرة عن الشاشة */
+	
+  
 }
 
 .ad-container-flex {
@@ -134,7 +133,7 @@ fetch(file)
           // محاكاة تحميل الإعلان (استبدل بمفتاحك الحقيقي عند النشر)
           const doc = ad.querySelector('iframe').contentWindow.document;
           doc.open();
-          doc.write(`<script>atOptions={'key':'dcff8a2cffdf0642c627a5bacf3a04fd','format':'iframe','height':60,'width':3200};<\/script><script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>`);
+          doc.write(`<script>atOptions={'key':'dcff8a2cffdf0642c627a5bacf3a04fd','format':'iframe','height':60,'width':320};<\/script><script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>`);
           doc.close();
       }
     }
@@ -171,7 +170,7 @@ setInterval(function(){
 		'key' : '0b7539a5227dc7b69da2ea94b0521ab6',
 		'format' : 'iframe',
 		'height' : 250,
-		'width' : 3000
+		'width' : 300
 	};
     </script>
     <script type="text/javascript" src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
