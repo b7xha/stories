@@ -10,75 +10,18 @@
 <meta property="og:image" content="https://i.ibb.co/zTXjGDvv/1777845960043.png">
 <meta property="og:type" content="website">
 
-  
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#fff;
-  --text:#222;
-  --main:#ff6a00;
-}
-
-body.dark{
-  --bg:#0f0f0f;
-  --text:#fff;
-}
-
-body{
-  margin:0;
-  padding:15px;
-  font-family:'Cairo',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  max-width:600px;
-  margin:auto;
-}
-
-h1{
-  text-align:center;
-  width:100%;
-  margin:10px 0;
-  color:var(--main);
-}
-
-h2{
-  text-align:right;
-  color:#ffaa33;
-}
-
-h3{
-  display:block;
-  direction:ltr;
-  text-align:left;
-  color:#ff0000;
-} 
-  
-p{
-  line-height:2;
-  margin:10px 0;
-  text-align:right;
-}
-
-/* زر الثيم */
-.toggle{
-  position:fixed;
-  top:15px;
-  left:15px;
-  background:var(--main);
-  color:#fff;
-  padding:10px 12px;
-  border-radius:10px;
-  cursor:pointer;
-  z-index:9999;
-  font-size:16px;
-}
-
-/* إعلان */
-.ad{
-  margin:15px 0;
-  text-align:center;
-}
+:root{ --bg:#fff; --text:#222; --main:#ff6a00; }
+body.dark{ --bg:#0f0f0f; --text:#fff; }
+body{ margin:0; padding:15px; font-family:'Cairo',sans-serif; background:var(--bg); color:var(--text); max-width:600px; margin:auto; }
+h1{ text-align:center; width:100%; margin:10px 0; color:var(--main); }
+h2{ text-align:right; color:#ffaa33; margin-top: 20px; }
+h3{ display:block; direction:ltr; text-align:left; color:#ff0000; } 
+p{ line-height:2; margin:10px 0; text-align:right; }
+.toggle{ position:fixed; top:15px; left:15px; background:var(--main); color:#fff; padding:10px 12px; border-radius:10px; cursor:pointer; z-index:9999; font-size:16px; }
+.ad{ margin:15px 0; text-align:center; min-height: 60px; }
 </style>
 </head>
 
@@ -87,124 +30,94 @@ p{
 <div id="content"></div>
 
 <script>
-
-const file=new URLSearchParams(location.search).get("file");
+const file = new URLSearchParams(location.search).get("file");
 
 fetch(file)
-.then(r=>r.text())
-.then(data=>{
+.then(r => r.text())
+.then(data => {
+  let lines = data.split("\n");
+  let div = document.getElementById("content");
 
-  let lines=data.split("\n");
-  let div=document.getElementById("content");
+  lines.forEach(line => {
+    line = line.trim();
+    if (line === "") return;
 
-  lines.forEach(line=>{
-    line=line.trim();
-
-    if(line.startsWith("***")){
-      let h1=document.createElement("h1");
-      h1.textContent=line.replace(/\*/g,"");
+    if (line.startsWith("***")) {
+      let h1 = document.createElement("h1");
+      h1.textContent = line.replace(/\*/g, "");
       div.appendChild(h1);
 
-    }else if(line.startsWith("**")){
-      // إضافة الإعلان قبل النص الذي يبدأ بـ **
-      let adBeforeH2 = document.createElement("div");
-      adBeforeH2.className = "ad";
-      adBeforeH2.innerHTML = `
-        <ins class="adsbygoogle"
-             style="display:inline-block;width:320px;height:60px"
-             data-ad-client="ca-pub-xxxxxxxxxxxxxx"
-             data-ad-slot="xxxxxxxxxx"></ins>
-        <script>
-        atOptions = {
-         'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
-         'format':'iframe',
-         'height':60,
-         'width':320
-        };
+    } else if (line.startsWith("**")) {
+      // 1. إعلان يظهر قبل النص الذي يبدأ بـ **
+      let adBefore = document.createElement("div");
+      adBefore.className = "ad";
+      adBefore.innerHTML = `
+        <script type="text/javascript">
+          atOptions = { 'key':'dcff8a2cffdf0642c627a5bacf3a04fd', 'format':'iframe', 'height':60, 'width':320 };
         <\/script>
-        <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
       `;
-      div.appendChild(adBeforeH2);
+      div.appendChild(adBefore);
 
-      let h2=document.createElement("h2");
-      h2.textContent=line.replace(/\*/g,"");
+      // 2. العنوان الفرعي نفسه
+      let h2 = document.createElement("h2");
+      h2.textContent = line.replace(/\*/g, "");
       div.appendChild(h2);
 
-   }else if(line.startsWith("~~")){
-      let h3=document.createElement("h3");
-      h3.textContent=line.replace(/\~~/g,"");
+    } else if (line.startsWith("~~")) {
+      let h3 = document.createElement("h3");
+      h3.textContent = line.replace(/\~~/g, "");
       div.appendChild(h3); 
       
-    }else if(line!==""){
-      let p=document.createElement("p");
-      p.textContent=line;
+    } else {
+      // الفقرات العادية
+      let p = document.createElement("p");
+      p.textContent = line;
       div.appendChild(p);
 
-      let ad=document.createElement("div");
-      ad.className="ad";
-      ad.innerHTML= `
-        <script>
-        atOptions = {
-         'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
-         'format':'iframe',
-         'height':60,
-         'width':320
-        };
+      // إعلان يظهر بعد الفقرة العادية (اختياري، يمكنك حذفه إذا كان يسبب كثرة إعلانات)
+      let adAfter = document.createElement("div");
+      adAfter.className = "ad";
+      adAfter.innerHTML = `
+        <script type="text/javascript">
+          atOptions = { 'key':'dcff8a2cffdf0642c627a5bacf3a04fd', 'format':'iframe', 'height':60, 'width':320 };
         <\/script>
-        <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
+        <script type="text/javascript" src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
       `;
-      div.appendChild(ad);
+      div.appendChild(adAfter);
     }
-
   });
-
 });
 
-// ثيم
 function toggleTheme(){
-  let dark=!document.body.classList.contains("dark");
+  let dark = !document.body.classList.contains("dark");
   document.body.classList.toggle("dark");
-  localStorage.setItem("theme",dark);
+  localStorage.setItem("theme", dark);
 }
-
-if(localStorage.getItem("theme")==="true"){
+if(localStorage.getItem("theme") === "true"){
   document.body.classList.add("dark");
 }
-
 </script>
 
 <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:20px 0;">
-
   <div class="ad">
-    <script>
-    atOptions = {
-     'key':'0b7539a5227dc7b69da2ea94b0521ab6',
-     'format':'iframe',
-     'height':250,
-     'width':300
-    };
+    <script type="text/javascript">
+      atOptions = { 'key':'0b7539a5227dc7b69da2ea94b0521ab6', 'format':'iframe', 'height':250, 'width':300 };
     </script>
-    <script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
   </div>
-
   <div class="ad">
-    <script>
-    atOptions = {
-     'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
-     'format':'iframe',
-     'height':250,
-     'width':300
-    };
+    <script type="text/javascript">
+      atOptions = { 'key':'dcff8a2cffdf0642c627a5bacf3a04fd', 'format':'iframe', 'height':250, 'width':300 };
     </script>
-    <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
   </div>
-
 </div>
 
 <script>
-document.body.addEventListener("click",function(){
-window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c");
-},{once:true});
+document.body.addEventListener("click", function(){
+  window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c");
+}, {once:true});
 </script>
 
 </body>
