@@ -106,20 +106,26 @@ fetch(file)
       div.appendChild(h1);
 
     }else if(line.startsWith("**")){
-      // إضافة إعلان قبل النص الذي يبدأ بـ **
-      let adBefore=document.createElement("div");
-      adBefore.className="ad";
-      adBefore.innerHTML=`<script>
-atOptions = {
- 'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
- 'format':'iframe',
- 'height':60,
- 'width':320
-};
-<\/script>
-<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>`;
-      div.appendChild(adBefore);
-      
+      // إضافة الإعلان قبل النص الذي يبدأ بـ **
+      let adBeforeH2 = document.createElement("div");
+      adBeforeH2.className = "ad";
+      adBeforeH2.innerHTML = `
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:320px;height:60px"
+             data-ad-client="ca-pub-xxxxxxxxxxxxxx"
+             data-ad-slot="xxxxxxxxxx"></ins>
+        <script>
+        atOptions = {
+         'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
+         'format':'iframe',
+         'height':60,
+         'width':320
+        };
+        <\/script>
+        <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
+      `;
+      div.appendChild(adBeforeH2);
+
       let h2=document.createElement("h2");
       h2.textContent=line.replace(/\*/g,"");
       div.appendChild(h2);
@@ -136,15 +142,17 @@ atOptions = {
 
       let ad=document.createElement("div");
       ad.className="ad";
-      ad.innerHTML=`<script>
-atOptions = {
- 'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
- 'format':'iframe',
- 'height':60,
- 'width':320
-};
-<\/script>
-<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>`;
+      ad.innerHTML= `
+        <script>
+        atOptions = {
+         'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
+         'format':'iframe',
+         'height':60,
+         'width':320
+        };
+        <\/script>
+        <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
+      `;
       div.appendChild(ad);
     }
 
@@ -165,7 +173,6 @@ if(localStorage.getItem("theme")==="true"){
 
 </script>
 
-<!-- إعلانين في النهاية جنب بعض -->
 <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:20px 0;">
 
   <div class="ad">
@@ -194,7 +201,6 @@ if(localStorage.getItem("theme")==="true"){
 
 </div>
 
-<!-- pop -->
 <script>
 document.body.addEventListener("click",function(){
 window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c");
