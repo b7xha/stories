@@ -103,22 +103,8 @@ fetch(file)
       div.appendChild(h1);
 
     }else if(line.startsWith("**")){
-      let h2=document.createElement("h2");
-      h2.textContent=line.replace(/\*/g,"");
-      div.appendChild(h2);
 
-    }else if(line.startsWith("~~")){
-      let h3=document.createElement("h3");
-      h3.textContent=line.replace(/\~~/g,"");
-      div.appendChild(h3);
-
-    }else if(line!==""){
-      
-      let p=document.createElement("p");
-      p.textContent=line;
-      div.appendChild(p);
-
-      // ===== إعلان بعد كل فقرة (تم الإصلاح) =====
+      // إعلان قبل العنوان
       let ad=document.createElement("div");
       ad.className="ad";
 
@@ -136,6 +122,36 @@ atOptions = {
 `;
 
       ad.appendChild(frame);
+      div.appendChild(ad);
+
+      let h2=document.createElement("h2");
+      h2.textContent=line.replace(/\*/g,"");
+      div.appendChild(h2);
+
+    }else if(line.startsWith("~~")){
+      let h3=document.createElement("h3");
+      h3.textContent=line.replace(/\~~/g,"");
+      div.appendChild(h3);
+
+    }else if(line!==""){
+
+      let p=document.createElement("p");
+      p.textContent=line;
+      div.appendChild(p);
+
+      let ad=document.createElement("div");
+      ad.className="ad";
+      ad.innerHTML=`
+<script>
+atOptions = {
+ 'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
+ 'format':'iframe',
+ 'height':60,
+ 'width':320
+};
+<\/script>
+<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
+`;
       div.appendChild(ad);
     }
 
