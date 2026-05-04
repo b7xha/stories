@@ -4,14 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>قصص وروايات</title>
-
 <meta name="description" content="استمتع بقراءة مجموعة متنوعة من القصص والروايات المشوقة في مكان واحد، مع محتوى متجدد يناسب جميع الأذواق وسهل التصفح من أي جهاز.">
-
 <meta property="og:title" content="قصص وروايات">
 <meta property="og:description" content="استمتع بقراءة مجموعة متنوعة من القصص والروايات المشوقة في مكان واحد، مع محتوى متجدد يناسب جميع الأذواق وسهل التصفح من أي جهاز.">
 <meta property="og:image" content="https://i.ibb.co/zTXjGDvv/1777845960043.png">
 <meta property="og:type" content="website">
 
+  
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -38,6 +37,8 @@ body{
 
 h1{
   text-align:center;
+  width:100%;
+  margin:10px 0;
   color:var(--main);
 }
 
@@ -47,15 +48,33 @@ h2{
 }
 
 h3{
+  display:block;
+  direction:ltr;
   text-align:left;
-  color:red;
-}
-
+  color:#ff0000;
+} 
+  
 p{
   line-height:2;
+  margin:10px 0;
   text-align:right;
 }
 
+/* زر الثيم */
+.toggle{
+  position:fixed;
+  top:15px;
+  left:15px;
+  background:var(--main);
+  color:#fff;
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  z-index:9999;
+  font-size:16px;
+}
+
+/* إعلان */
 .ad{
   margin:15px 0;
   text-align:center;
@@ -87,26 +106,10 @@ fetch(file)
       div.appendChild(h1);
 
     }else if(line.startsWith("**")){
-      let h2=document.createElement("h2");
-      h2.textContent=line.replace(/\*/g,"");
-      div.appendChild(h2);
-
-    }else if(line.startsWith("~~")){
-      let h3=document.createElement("h3");
-      h3.textContent=line.replace(/\~~/g,"");
-      div.appendChild(h3);
-
-    }else if(line!==""){
-
-      let p=document.createElement("p");
-      p.textContent=line;
-      div.appendChild(p);
-
-      // إعلان واحد ثابت بعد الفقرة (بدون تكرار مشاكل)
-      let ad=document.createElement("div");
-      ad.className="ad";
-      ad.innerHTML=`
-<script>
+      // إضافة إعلان قبل النص الذي يبدأ بـ **
+      let adBefore=document.createElement("div");
+      adBefore.className="ad";
+      adBefore.innerHTML=`<script>
 atOptions = {
  'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
  'format':'iframe',
@@ -114,14 +117,51 @@ atOptions = {
  'width':320
 };
 <\/script>
-<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
-`;
+<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>`;
+      div.appendChild(adBefore);
+      
+      let h2=document.createElement("h2");
+      h2.textContent=line.replace(/\*/g,"");
+      div.appendChild(h2);
+
+   }else if(line.startsWith("~~")){
+      let h3=document.createElement("h3");
+      h3.textContent=line.replace(/\~~/g,"");
+      div.appendChild(h3); 
+      
+    }else if(line!==""){
+      let p=document.createElement("p");
+      p.textContent=line;
+      div.appendChild(p);
+
+      let ad=document.createElement("div");
+      ad.className="ad";
+      ad.innerHTML=`<script>
+atOptions = {
+ 'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
+ 'format':'iframe',
+ 'height':60,
+ 'width':320
+};
+<\/script>
+<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>`;
       div.appendChild(ad);
     }
 
   });
 
 });
+
+// ثيم
+function toggleTheme(){
+  let dark=!document.body.classList.contains("dark");
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme",dark);
+}
+
+if(localStorage.getItem("theme")==="true"){
+  document.body.classList.add("dark");
+}
 
 </script>
 
@@ -153,6 +193,13 @@ atOptions = {
   </div>
 
 </div>
+
+<!-- pop -->
+<script>
+document.body.addEventListener("click",function(){
+window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c");
+},{once:true});
+</script>
 
 </body>
 </html>
