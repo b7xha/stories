@@ -118,26 +118,24 @@ fetch(file)
       p.textContent=line;
       div.appendChild(p);
 
-      // إعلان (تم إصلاحه عشان يتكرر بشكل صحيح)
+      // ===== إعلان بعد كل فقرة (تم الإصلاح) =====
       let ad=document.createElement("div");
       ad.className="ad";
 
-      let script1=document.createElement("script");
-      script1.innerHTML=`
+      let frame=document.createElement("div");
+      frame.innerHTML=`
+<script>
 atOptions = {
  'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
  'format':'iframe',
  'height':60,
  'width':320
 };
+<\/script>
+<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
 `;
 
-      let script2=document.createElement("script");
-      script2.src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js";
-
-      ad.appendChild(script1);
-      ad.appendChild(script2);
-
+      ad.appendChild(frame);
       div.appendChild(ad);
     }
 
