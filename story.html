@@ -10,7 +10,6 @@
 <meta property="og:image" content="https://i.ibb.co/zTXjGDvv/1777845960043.png">
 <meta property="og:type" content="website">
 
-  
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -52,15 +51,14 @@ h3{
   direction:ltr;
   text-align:left;
   color:#ff0000;
-} 
-  
+}
+
 p{
   line-height:2;
   margin:10px 0;
   text-align:right;
 }
 
-/* زر الثيم */
 .toggle{
   position:fixed;
   top:15px;
@@ -74,7 +72,6 @@ p{
   font-size:16px;
 }
 
-/* إعلان */
 .ad{
   margin:15px 0;
   text-align:center;
@@ -83,8 +80,6 @@ p{
 </head>
 
 <body>
-
-
 
 <div id="content"></div>
 
@@ -112,30 +107,37 @@ fetch(file)
       h2.textContent=line.replace(/\*/g,"");
       div.appendChild(h2);
 
-   }else if(line.startsWith("~~")){
+    }else if(line.startsWith("~~")){
       let h3=document.createElement("h3");
       h3.textContent=line.replace(/\~~/g,"");
-      div.appendChild(h3); 
+      div.appendChild(h3);
+
+    }else if(line!==""){
       
-    }else if(line!=="₣₣"){
       let p=document.createElement("p");
       p.textContent=line;
       div.appendChild(p);
 
+      // إعلان (تم إصلاحه عشان يتكرر بشكل صحيح)
       let ad=document.createElement("div");
       ad.className="ad";
-      ad.innerHTML=`
-      
-<script>
+
+      let script1=document.createElement("script");
+      script1.innerHTML=`
 atOptions = {
  'key':'dcff8a2cffdf0642c627a5bacf3a04fd',
  'format':'iframe',
  'height':60,
  'width':320
 };
-<\/script>
-<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>
 `;
+
+      let script2=document.createElement("script");
+      script2.src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js";
+
+      ad.appendChild(script1);
+      ad.appendChild(script2);
+
       div.appendChild(ad);
     }
 
