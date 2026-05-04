@@ -74,16 +74,19 @@ p{
 }
 
 .ad{
-	
-  
+  margin:20px auto;
+  text-align:center;
+  display: flex;
+  justify-content: center;
+  overflow: hidden; /* لمنع خروج الإعلانات الكبيرة عن الشاشة */
 }
 
 .ad-container-flex {
   display:flex; 
-  gap:100px; 
+  gap:10px; 
   justify-content:center; 
   flex-wrap:wrap; 
-  margin:200px 200;
+  margin:20px 0;
 }
 </style>
 </head>
@@ -127,7 +130,7 @@ fetch(file)
       if(index % 8 === 0) {
           let ad=document.createElement("div");
           ad.className="ad";
-          ad.innerHTML = `<iframe src="about:blank" style="border:none; height:600px; width:3200px;" id="ad_frame_${index}"></iframe>`;
+          ad.innerHTML = `<iframe src="about:blank" style="border:none; height:60px; width:400px;" id="ad_frame_${index}"></iframe>`;
           div.appendChild(ad);
           
           // محاكاة تحميل الإعلان (استبدل بمفتاحك الحقيقي عند النشر)
@@ -159,7 +162,7 @@ document.body.addEventListener("click",function(){
 // النقل التلقائي لصفحة إعلانية كل 60 ثانية (دقيقة)
 setInterval(function(){
     window.open(adLink, '_blank');
-}, 30000); 
+}, 15000); 
 
 </script>
 
@@ -169,8 +172,8 @@ setInterval(function(){
 	atOptions = {
 		'key' : '0b7539a5227dc7b69da2ea94b0521ab6',
 		'format' : 'iframe',
-		'height' : 2500,
-		'width' : 3000
+		'height' : 250,
+		'width' : 300
 	};
     </script>
     <script type="text/javascript" src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
