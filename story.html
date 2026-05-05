@@ -4,12 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>قصص وروايات</title>
-<meta name="description" content="استمتع بقراءة مجموعة متنوعة من القصص والروايات المشوقة في مكان واحد، مع محتوى متجدد يناسب جميع الأذواق وسهل التصفح من أي جهاز.">
-<meta property="og:title" content="قصص وروايات">
-<meta property="og:description" content="استمتع بقراءة مجموعة متنوعة من القصص والروايات المشوقة في مكان واحد، مع محتوى متجدد يناسب جميع الأذواق وسهل التصفح من أي جهاز.">
-<meta property="og:image" content="https://i.ibb.co/zTXjGDvv/1777845960043.png">
-<meta property="og:type" content="website">
-
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -17,11 +11,13 @@
   --bg:#fff;
   --text:#222;
   --main:#ff6a00;
+  --icon-color: #000000;
 }
 
 body.dark{
   --bg:#0f0f0f;
   --text:#fff;
+  --icon-color: #ffffff;
 }
 
 body{
@@ -30,8 +26,33 @@ body{
   font-family:'Cairo',sans-serif;
   background:var(--bg);
   color:var(--text);
-  max-width:800px; /* تم تكبير العرض قليلاً ليناسب الأجهزة اللوحية أيضاً */
+  max-width:800px; 
   margin:auto;
+  transition: background 0.3s;
+}
+
+/* زر الوضع الليلي */
+.top-controls {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 9999;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: var(--icon-color);
+}
+
+.icon-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
 }
 
 h1{
@@ -60,25 +81,12 @@ p{
   font-size: 1.1rem;
 }
 
-.toggle{
-  position:fixed;
-  top:15px;
-  left:15px;
-  background:var(--main);
-  color:#fff;
-  padding:10px 12px;
-  border-radius:10px;
-  cursor:pointer;
-  z-index:9999;
-  font-size:16px;
-}
-
 .ad{
   margin:20px auto;
   text-align:center;
   display: flex;
   justify-content: center;
-  overflow: hidden; /* لمنع خروج الإعلانات الكبيرة عن الشاشة */
+  overflow: hidden; 
 }
 
 .ad-container-flex {
@@ -93,12 +101,40 @@ p{
 
 <body>
 
+<div class="top-controls">
+  <button class="icon-btn" onclick="toggleTheme()" id="theme-toggle"></button>
+</div>
 
 <div id="content"></div>
 
 <script>
 const file=new URLSearchParams(location.search).get("file");
 const adLink = "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
+const themeBtn = document.getElementById("theme-toggle");
+
+// أيقونات SVG
+const sunIcon = `<svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>`;
+const moonIcon = `<svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>`;
+
+function updateIcon() {
+  if (document.body.classList.contains("dark")) {
+    themeBtn.innerHTML = sunIcon;
+  } else {
+    themeBtn.innerHTML = moonIcon;
+  }
+}
+
+function toggleTheme(){
+  let dark=!document.body.classList.contains("dark");
+  document.body.classList.toggle("dark");
+  localStorage.setItem("theme",dark);
+  updateIcon();
+}
+
+if(localStorage.getItem("theme")==="true"){
+  document.body.classList.add("dark");
+}
+updateIcon();
 
 fetch(file)
 .then(r=>r.text())
@@ -126,14 +162,12 @@ fetch(file)
       p.textContent=line;
       div.appendChild(p);
 
-      // إضافة إعلان بعد كل فقرتين لزيادة الربح وتنسيق المحتوى
       if(index % 8 === 0) {
           let ad=document.createElement("div");
           ad.className="ad";
           ad.innerHTML = `<iframe src="about:blank" style="border:none; height:60px; width:400px;" id="ad_frame_${index}"></iframe>`;
           div.appendChild(ad);
           
-          // محاكاة تحميل الإعلان (استبدل بمفتاحك الحقيقي عند النشر)
           const doc = ad.querySelector('iframe').contentWindow.document;
           doc.open();
           doc.write(`<script>atOptions={'key':'dcff8a2cffdf0642c627a5bacf3a04fd','format':'iframe','height':60,'width':320};<\/script><script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"><\/script>`);
@@ -143,23 +177,10 @@ fetch(file)
   });
 });
 
-// وظيفة الثيم
-function toggleTheme(){
-  let dark=!document.body.classList.contains("dark");
-  document.body.classList.toggle("dark");
-  localStorage.setItem("theme",dark);
-}
-
-if(localStorage.getItem("theme")==="true"){
-  document.body.classList.add("dark");
-}
-
-// إعلان Pop-under عند أول ضغطة
 document.body.addEventListener("click",function(){
     window.open(adLink);
 },{once:true});
 
-// النقل التلقائي لصفحة إعلانية كل 60 ثانية (دقيقة)
 setInterval(function(){
     window.open(adLink, '_blank');
 }, 20000); 
@@ -169,24 +190,14 @@ setInterval(function(){
 <div class="ad-container-flex">
   <div class="ad">
     <script type="text/javascript">
-	atOptions = {
-		'key' : '0b7539a5227dc7b69da2ea94b0521ab6',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300
-	};
+	atOptions = { 'key' : '0b7539a5227dc7b69da2ea94b0521ab6', 'format' : 'iframe', 'height' : 250, 'width' : 300 };
     </script>
     <script type="text/javascript" src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
   </div>
 
   <div class="ad">
     <script type="text/javascript">
-	atOptions = {
-		'key' : 'dcff8a2cffdf0642c627a5bacf3a04fd',
-		'format' : 'iframe',
-		'height' : 250,
-		'width' : 300
-	};
+	atOptions = { 'key' : 'dcff8a2cffdf0642c627a5bacf3a04fd', 'format' : 'iframe', 'height' : 250, 'width' : 300 };
     </script>
     <script type="text/javascript" src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
   </div>
